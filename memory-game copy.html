@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #222; }
+        #game-container { text-align: center; }
+        #score { color: #fff; font-size: 1.5em; margin-bottom: 20px; }
+        #restart { margin: 10px; padding: 10px 20px; font-size: 1em; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        #restart:hover { background: #777; }
+        #instructions { color: #fff; font-size: 1em; margin-top: 20px; max-width: 400px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px; }
+        .card { width: 80px; height: 80px; background: #4a90e2; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 2em; cursor: pointer; transition: transform 0.3s; transform-style: preserve-3d; }
+        .card.flipped { transform: rotateY(180deg); background: #fff; color: #333; }
+        .card.matched { background: #4CAF50; color: #fff; cursor: default; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="score">Moves: 0 | Pairs: 0/8</div>
+        <button id="restart">Restart</button>
+        <div class="grid" id="grid"></div>
+        <div id="instructions">
+            <strong>Controls:</strong><br>
+            Click cards to flip them<br>
+            <strong>Goal:</strong> Find all matching pairs!
+        </div>
+    </div>
+    <script>
+        const cards = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
+        let gameCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let canFlip = true;
+        
+        document.getElementById('restart').onclick = startGame;
+        
+        function initGame() {
+            gameCards = [...cards, ...cards]; // Duplicate cards for pairs
+            // Shuffle cards
+            for (let i = gameCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [gameCards[i], gameCards[j]] = [gameCards[j], gameCards[i]];
+            }
+        }
+        
+        function createCard(index) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.index = index;
+            card.dataset.value = gameCards[index];
+            card.addEventListener('click', () => flipCard(card));
+            return card;
+        }
+        
+        function flipCard(card) {
+            if (!canFlip || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            card.textContent = card.dataset.value;
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                canFlip = false;
+                checkMatch();
+            }
+            
+            updateScore();
+        }
+        
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.value === card2.dataset.value) {
+                // Match found
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                
+                if (matchedPairs === cards.length) {
+                    setTimeout(() => {
+                        alert(`Congratulations! You won in ${moves} moves!`);
+                    }, 500);
+                }
+                
+                flippedCards = [];
+                canFlip = true;
+            } else {
+                // No match
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '';
+                    card2.textContent = '';
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').innerText = `Moves: ${moves} | Pairs: ${matchedPairs}/${cards.length}`;
+        }
+        
+        function updateDisplay() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < gameCards.length; i++) {
+                const card = createCard(i);
+                grid.appendChild(card);
+            }
+        }
+        
+        function startGame() {
+            matchedPairs = 0;
+            moves = 0;
+            flippedCards = [];
+            canFlip = true;
+            initGame();
+            updateDisplay();
+            updateScore();
+        }
+        
+        startGame();
+    </script>
+</body>
+</html> 
