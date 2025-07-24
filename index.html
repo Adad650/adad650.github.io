@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade Hub - Web Games Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .header h1 {
+            color: #fff;
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .game-card:hover::before {
+            left: 100%;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .game-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .game-title {
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        
+        .play-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+        }
+        
+        .stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fff;
+            display: block;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .game-card:nth-child(1) { animation: fadeInUp 0.6s ease-out; }
+        .game-card:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.1s; }
+        .game-card:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.2s; }
+        .game-card:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.3s; }
+        .game-card:nth-child(5) { animation: fadeInUp 0.6s ease-out 0.4s; }
+        .game-card:nth-child(6) { animation: fadeInUp 0.6s ease-out 0.5s; }
+        .game-card:nth-child(7) { animation: fadeInUp 0.6s ease-out 0.6s; }
+        .game-card:nth-child(8) { animation: fadeInUp 0.6s ease-out 0.7s; }
+        .game-card:nth-child(9) { animation: fadeInUp 0.6s ease-out 0.8s; }
+        .game-card:nth-child(10) { animation: fadeInUp 0.6s ease-out 0.9s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5em; }
+            .games-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+            .stats { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Arcade Hub</h1>
+            <p>Your Ultimate Web Games Collection</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">10</span>
+                <span>Games Available</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">∞</span>
+                <span>Hours of Fun</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">100%</span>
+                <span>Free to Play</span>
+            </div>
+        </div>
+        
+        <div class="games-grid">
+            <div class="game-card" onclick="window.location.href='/snake'">
+                <span class="game-icon">🐍</span>
+                <div class="game-title">Snake</div>
+                <div class="game-description">Classic snake game with increasing speed. Eat food to grow longer!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/tetris'">
+                <span class="game-icon">🧩</span>
+                <div class="game-title">Tetris</div>
+                <div class="game-description">Arrange falling blocks to clear lines and score points!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/pong'">
+                <span class="game-icon">🏓</span>
+                <div class="game-title">Pong</div>
+                <div class="game-description">Classic paddle game with AI opponents and dynamic speed!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/breakout'">
+                <span class="game-icon">🧱</span>
+                <div class="game-title">Breakout</div>
+                <div class="game-description">Break all the bricks with your paddle and bouncing ball!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/space-invaders'">
+                <span class="game-icon">👾</span>
+                <div class="game-title">Space Invaders</div>
+                <div class="game-description">Defend Earth from alien invasion! Destroy all aliens to win!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/flappy-bird'">
+                <span class="game-icon">🐦</span>
+                <div class="game-title">Flappy Bird</div>
+                <div class="game-description">Navigate through pipes with perfect timing and reflexes!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/2048'">
+                <span class="game-icon">🔢</span>
+                <div class="game-title">2048</div>
+                <div class="game-description">Combine tiles to reach the magical 2048 number!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/memory-game'">
+                <span class="game-icon">🧠</span>
+                <div class="game-title">Memory</div>
+                <div class="game-description">Test your memory by finding matching pairs of cards!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/tictactoe'">
+                <span class="game-icon">⭕</span>
+                <div class="game-title">Tic-Tac-Toe</div>
+                <div class="game-description">Classic X's and O's game with modern animations!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+            
+            <div class="game-card" onclick="window.location.href='/wordle'">
+                <span class="game-icon">📝</span>
+                <div class="game-title">Wordle</div>
+                <div class="game-description">Guess the 5-letter word in 6 tries with color hints!</div>
+                <button class="play-button">Play Now</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
