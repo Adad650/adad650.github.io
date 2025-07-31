@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
     <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #222; }
+        body { 
+            background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+        }
         #game-container { text-align: center; }
         #score { color: #fff; font-size: 1.5em; margin-bottom: 20px; }
         #restart { margin: 10px; padding: 10px 20px; font-size: 1em; background: #555; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
@@ -17,7 +20,7 @@
         .card.matched { background: #4CAF50; color: #fff; cursor: default; }
     </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
     <div id="game-container">
         <div id="score">Moves: 0 | Pairs: 0/8</div>
         <button id="restart">Restart</button>

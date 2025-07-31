@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bird</title>
     <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #222; }
+        body { 
+            background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);
+            display: flex; justify-content: center; align-items: center; height: 100vh; 
+        }
         canvas { background: #87CEEB; border: 2px solid #fff; }
         #score { color: #fff; font-size: 1.5em; position: absolute; top: 20px; left: 20px; }
         #restart { position: absolute; top: 60px; left: 20px; font-size: 1em; }
         #instructions { color: #fff; font-size: 1em; position: absolute; top: 100px; left: 20px; max-width: 300px; }
     </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
     <div id="score">Score: 0</div>
     <button id="restart">Restart</button>
     <div id="instructions">

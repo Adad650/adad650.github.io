@@ -12,7 +12,7 @@
         }
         
         body { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
             display: flex;
@@ -138,7 +138,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);">
     <div id="game-container">
         <div class="game-title">🐍 Snake</div>
         <div id="score">Score: 0</div>
@@ -216,69 +216,4 @@
             
             const time = Date.now() * 0.005;
             const pulse = Math.sin(time) * 0.2 + 0.8;
-            ctx.fillStyle = `rgba(255, 107, 107, ${pulse})`;
-            ctx.fillRect(food.x, food.y, box, box);
-            
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(food.x, food.y, box, box);
-
-            let headX = snake[0].x;
-            let headY = snake[0].y;
-            if (direction === 'LEFT') headX -= box;
-            if (direction === 'UP') headY -= box;
-            if (direction === 'RIGHT') headX += box;
-            if (direction === 'DOWN') headY += box;
-
-            if (headX < 0 || headY < 0 || headX >= canvas.width || headY >= canvas.height || collision(headX, headY, snake)) {
-                clearInterval(gameInterval);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.font = 'bold 2em Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 20);
-                ctx.font = '1.2em Arial';
-                ctx.fillText(`Final Score: ${score}`, canvas.width/2, canvas.height/2 + 20);
-                gameOver = true;
-                return;
-            }
-
-            let newHead = {x: headX, y: headY};
-            if (headX === food.x && headY === food.y) {
-                score++;
-                document.getElementById('score').innerText = 'Score: ' + score;
-                food = { x: Math.floor(Math.random()*(canvas.width/box))*box, y: Math.floor(Math.random()*(canvas.height/box))*box };
-                if (score % 3 === 0 && speed > 60) {
-                    speed -= 20;
-                    clearInterval(gameInterval);
-                    gameInterval = setInterval(draw, speed);
-                }
-            } else {
-                snake.pop();
-            }
-            snake.unshift(newHead);
-        }
-
-        function collision(x, y, array) {
-            for (let i = 0; i < array.length; i++) {
-                if (x === array[i].x && y === array[i].y) return true;
-            }
-            return false;
-        }
-
-        function startGame() {
-            snake = [{x: 9*box, y: 10*box}];
-            direction = 'RIGHT';
-            food = { x: Math.floor(Math.random()*(canvas.width/box))*box, y: Math.floor(Math.random()*(canvas.height/box))*box };
-            score = 0;
-            speed = 200;
-            gameOver = false;
-            document.getElementById('score').innerText = 'Score: 0';
-            clearInterval(gameInterval);
-            gameInterval = setInterval(draw, speed);
-        }
-
-        resizeCanvas();
-        startGame();
-    </script>
-</body>
-</html> 
+            ctx.fillStyle = `
